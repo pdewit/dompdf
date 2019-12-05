@@ -2541,13 +2541,15 @@ EOT;
                             $n = $dtmp['N'];
                             $width = floatval($dtmp['WX']);
 
-                            if ($c >= 0) {
-                                if ($c != hexdec($n)) {
-                                    $data['codeToName'][$c] = $n;
+                            if (ctype_xdigit($c) && ctype_xdigit($n)) {
+                                if ($c >= 0) {
+                                    if ($c != hexdec($n)) {
+                                        $data['codeToName'][$c] = $n;
+                                    }
+                                    $data['C'][$c] = $width;
+                                } else {
+                                    $data['C'][$n] = $width;
                                 }
-                                $data['C'][$c] = $width;
-                            } else {
-                                $data['C'][$n] = $width;
                             }
 
                             if (!isset($data['MissingWidth']) && $c == -1 && $n === '.notdef') {
