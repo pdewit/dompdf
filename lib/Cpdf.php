@@ -2590,19 +2590,21 @@ EOT;
                             $glyph = $dtmp['G'];
                             $width = floatval($dtmp['WX']);
 
-                            if ($c >= 0) {
-                                // Set values in CID to GID map
-                                if ($c >= 0 && $c < 0xFFFF && $glyph) {
-                                    $cidtogid[$c * 2] = chr($glyph >> 8);
-                                    $cidtogid[$c * 2 + 1] = chr($glyph & 0xFF);
-                                }
+                            if (ctype_xdigit($c) && ctype_xdigit($n)) {
+                                if ($c >= 0) {
+                                    // Set values in CID to GID map
+                                    if ($c >= 0 && $c < 0xFFFF && $glyph) {
+                                        $cidtogid[$c * 2] = chr($glyph >> 8);
+                                        $cidtogid[$c * 2 + 1] = chr($glyph & 0xFF);
+                                    }
 
-                                if ($c != hexdec($n)) {
-                                    $data['codeToName'][$c] = $n;
+                                    if ($c != hexdec($n)) {
+                                        $data['codeToName'][$c] = $n;
+                                    }
+                                    $data['C'][$c] = $width;
+                                } else {
+                                    $data['C'][$n] = $width;
                                 }
-                                $data['C'][$c] = $width;
-                            } else {
-                                $data['C'][$n] = $width;
                             }
 
                             if (!isset($data['MissingWidth']) && $c == -1 && $n === '.notdef') {
