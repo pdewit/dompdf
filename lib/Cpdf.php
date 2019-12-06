@@ -2605,6 +2605,8 @@ EOT;
                                 } else {
                                     $data['C'][$n] = $width;
                                 }
+                            } else {
+                                $data['C'][$n] = $width;
                             }
 
                             if (!isset($data['MissingWidth']) && $c == -1 && $n === '.notdef') {
